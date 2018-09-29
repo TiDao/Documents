@@ -416,5 +416,152 @@ wls:/PMS_domain/serverConfig/>  exit()
 
 
 
+# P6EPPM
+
+## 初始化数据库
+
+### 运行赋权脚本
+* 初始化数据库之前先运行脚本
+* 脚本位置为p6suite/database/scripts/install/PM_17_12_00/manual_script_before_install.sql
+### 运行安装命令
+```shell
+cd p6suite/database
+sh dbsetup.sh
+```
+![p6_1](./p1.png)
+
+### 连接数据库
+
+![p2](./p2.png)
+
+![p3](./p3.png)
+
+* 填写相应的连接信息
+###  创建P6用户
+
+![p4](./p4.png)
+
+* 用户名不要做改动,密码和用户名相同
+* 下面设置p6网页登录的用户名和密码
+
+## 安装P6 API
+### 进入API安装目录
+```shell
+cd P6_R1712_Integration_API_linux/Disk1/install
+```
+![p5](./p5.png)
+### 运行安装命令
+```shell
+sh runInstaller.sh
+```
+
+![p6](./p6.png)
+* 点击next进入下一步
+
+![p7](./p7.png)
+* 选择local mode的安装模式
+* 点击next 进入下一步
+
+![p8](./p8.png)
+* 填写API文件夹的名字
+* 填写API文件夹的路径(这里要记住,后面要用)
+
+![p9](./p9.png)
+*  选择安装选项
+*  点击next进入下一步
+
+![p10](./p10.png)
+* 填写Java JDK路径
+* 点击next进入下一步
+
+![p11](./p11.png)
+* 检查确认安装信息
+* 点击install,开始安装
+
+### 为P6 API配置Weblogic域
+
+[考上一章 weblogic 配置过程为p6 创建域(按住ctrl点击跳转)](#Weblogic)
+
+```shell
+cd /home/weblogic/Oracle/Middleware/Oracle_Home/user_projects/domains/p6eppm_domain/bin
+```
+#### 编辑setDomainEnv.sh
+
+```shell
+vim setDomainEnv.sh
+```
+![p13](./p13.png)
+
+
+####　编辑weblogic 运行内存
+![p14](./p14.png)
+
+#### 编辑添加P6 API路径
+![p15](./p15.png)
+* 在JAVA_OPTIONS后台添加 P6 API路径
+```
+ -Dprimavera.bootstrap.home=/home/weblogic/P6IntegrationAPI_1
+```
+* 添加完成后重启weblogic服务器使配置生效
+
+### 部署P6应用
+
+#### 登录weblogic管理界面
+![weblogic22](weblogic22.png)
+
+#### 安装新应用
+![p16](./p16.png)
+* 1.点击部署(deployment)
+* 2.点击锁定并编辑(lock&Edit)
+* 3.点击安装(install)
+
+![p17](./p17.png)
+* 1.选择安装包的路径
+* 2.选择p6安装包
+* 点击next,进入下一步
+
+![p18](./p18.png)
+* 选择 作为一个应用部署
+
+![p19](.p19.png)
+* 选择部署到为p6 创建的集群
+
+![p20](./p20.png)
+* 选择将文件部署到每一个目标
+
+![p22](./p22.png)
+* 1.点击save保存
+* 2.点击激活更改(active changes)使变更生效
+
+
+![p23](./p23.png)
+
+* 1.点击部署(deployment)
+*  2.选择控制页签(control)
+*  3.选择start 为所有请求服务(servicing all request)
+
+
+![p24](./p24.png)
+
+* 如果查看状态为active ,ok 则成功运行
+
+![p25](./p25.png)
+* 查看p6 登录页面
+
+![p26](./p26.png)
+* 使用数据库初始化时配置的admin账户登录成功
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
